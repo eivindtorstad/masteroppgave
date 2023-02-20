@@ -1,0 +1,123 @@
+\documentclass{beamer}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+\title{Ca2+ hendelser i astrocytter som realisasjoner av gammaprosser}
+\subtitle{Presentasjon masterseminar}
+\author{Eivind Tørstad \\[1ex] 
+\small med Céline Cunen, Gudmund Hermansen og Rune Enger}
+\date{Februar 2023}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Oversikt}
+\tableofcontents
+    
+\end{frame}
+\begin{frame}
+    \section{Astrocytters rolle i sentralnervesystemet}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.35]{astrocytt.jpg}
+        \label{fig: 1.1}
+    \end{figure}
+    Astrocytter er en subtype av glia-celler, den nest mest vanlige type cellen i sentralnervesystem, etter nevroner. Astrocytter finnes hovedsaklig i hjernen, de er stjerneformede med lange armer(endfoot) og et sentrum(soma). Armene strekker seg vanligvis rundt andre viktige strukturer i hjernen som synapser og blodårer for å regulere en rekke viktige funksjoner:
+    \begin{itemize}
+        \item Glykogen buffer
+        \item Metabolisk støtte for nevroner
+        \item Blodgjennomstrømming og CSF
+        \item Potassiumkonsentrasjon
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    
+    Astrocytter regulerer funskjoner i sentralnervesystem ved Ca2+ bølger, som kommer av en høyning av Ca2+ nivået i cellen (en Ca2+ hendelse) og som så påvirker andre strukturer i hjernen.Vi kan måle Ca2+ nivået in vitro i en spesifikk celle, eller over en region med celler ved å først injisere flurosensindikatorer i hjernen og deretter måle flurosensnivået ved 2-foton mikroskopi.
+    \begin{wrapfigure}
+        \centering
+        \includegraphics[width=0.5\textwidth]{astrocyttca2+.png}
+        \label{fig: 1.2}
+    \end{wrapfigure}
+\end{frame}
+\begin{frame}{ROA-algoritmen}
+\section{Dataprosessering - ROA algoritmen}
+\begin{figure}
+    \centering
+    \includegraphics[scale= 2.5]{ROA.jpg}
+    \caption{Visualisering av ROA-algrotimen, Bjørnstad, Åsbjørsbråten et al.(2020)}
+    \label{fig:1.3}
+\end{figure}
+{\small
+\begin{gather*}
+    F_{i}(t)\; \text{er gråverdien til piksel $i$ på tidspunkt $t$},\\
+        F_{i}(t) \longrightarrow F'_{i}(t) \longrightarrow F^{*}_{i}(t)=\sqrt{F'_{i}(t)}
+    \\\ ROA_{i}(t)= \begin{cases}
+    1, & \text{hvis } F^{*}_{i}(t)\geq \hat{\mu}_{i} + k \cdot \hat{\sigma}_{i}\\\
+    0, & \text{ellers}
+    \end{cases}
+    \\\
+    ROA(t) = n^{-1}\sum_{i=1}^{n}ROA_{i}(t)
+\end{gather*}
+}
+    
+\end{frame}
+\begin{frame}{ROA-algoritmen}
+    \begin{figure}
+        \centering
+        \includegraphics[scale= 0.5]{generisk_ro_presentasjon.png}
+        \caption{En typisk tidsrekke med ROA-data}
+        \label{fig:roa}
+    \end{figure}
+    Hvordan modellere dette?
+\end{frame}
+\begin{frame}{Tidligere forsøk - ikke overbevisende}
+    \section{Litteraturoppsummering}
+\begin{figure}
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{jungetal.jpeg}
+  \captionof{figure}{Jung et al. (1998)}
+  \label{fig:test1}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{wuetal.jpg}
+  \captionof{figure}{Wu et al. (2014)}
+  \label{fig:test2}
+\end{minipage}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Tid siden forrige hendelse}
+\section{Modellering som gammaprosess}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.5]{simpleregression.png}
+        \caption{Enkel regresjon på tid siden forrige Ca2+ hendelse}
+        \label{fig:my_label}
+    \end{figure}
+\end{frame}
+\begin{frame}{Hva er en gammaprosess?}
+\begin{itemize}
+\item Gammafordelingen er gitt ved $g(z,a,b) = \frac{b^{a} }{\Gamma (a)}z^{a-1}e^{-bz}, \quad G(c,a,b) = \int_{0}^{c}g(z,a,b)dz$
+\item $E(Z) = \frac{a}{b}, \quad Var(Z) = \frac{a}{b^{2}}$
+\item Gitt uavhengige variabler $dZ_{1}, dZ_{2},...,dZ_{n} $ som er gamma-fordelte med parametere $(a_{1}, b),
+(a_{2},b), ... , (a_{n},b), b$ har vi at $Z =\sum_{i = 1}^{n}dZ_{i} \sim Gamma(\sum_{i=1}^{n}a_{i}, b) $.
+
+\item
+En gammaprosess $\{Z(t): t> 0\} $ er en sum av $n$ uavhengige, positive inkrementer $dZ(t) \sim Gamma (a \: dt,b), dZ(t) = Z(t + dt) -Z(t) $ s.a. $Z(t) = \sum_{s=1}^{n}dZ(s) \sim Gamma(\sum_{s=1}^{n}at,b)$.
+\end{itemize}    
+\end{frame}
+\begin{frame}{gammaprosess fortsatt}
+    
+\end{frame}
+\end{document}
